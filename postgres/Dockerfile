@@ -7,10 +7,11 @@ LABEL org.opencontainers.image.source="https://github.com/ttl64computer/service-
 
 # Why: the weekly rebuild picks up Alpine security fixes without waiting for a new upstream tag.
 # gosu is a Go binary pinned to an old toolchain (scanners flag its stdlib); su-exec does the
-# same job, is built by Alpine, and takes the same arguments the entrypoint passes.
+# same job, is built by Alpine, and takes the same arguments, so the entrypoint calls it instead.
 RUN apk upgrade --no-cache \
  && apk add --no-cache openssl su-exec \
- && ln -sf /sbin/su-exec /usr/local/bin/gosu
+ && rm -f /usr/local/bin/gosu \
+ && sed -i 's/\bgosu\b/su-exec/g' /usr/local/bin/docker-entrypoint.sh
 
 COPY ttl64-ssl.sh /usr/local/bin/ttl64-ssl.sh
 COPY ttl64-entrypoint.sh /usr/local/bin/ttl64-entrypoint.sh
