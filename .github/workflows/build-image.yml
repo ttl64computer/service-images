@@ -25,7 +25,8 @@ jobs:
       - name: Read the upstream version
         id: version
         run: |
-          full=$(sed -n 's/^FROM [a-z]*:\([0-9][0-9.]*\)[^@]*@.*/\1/p' "${{ inputs.image }}/Dockerfile" | head -1)
+          # The last FROM is the upstream image; earlier ones are build stages.
+          full=$(sed -n 's/^FROM [a-z]*:\([0-9][0-9.]*\)[^@]*@.*/\1/p' "${{ inputs.image }}/Dockerfile" | tail -1)
           test -n "$full"
           echo "full=$full" >> "$GITHUB_OUTPUT"
           echo "minor=${full%.*}" >> "$GITHUB_OUTPUT"
