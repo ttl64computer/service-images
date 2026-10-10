@@ -17,9 +17,10 @@ RUN chmod 755 /usr/local/bin/wp
 COPY ttl64-entrypoint.sh /usr/local/bin/ttl64-entrypoint.sh
 
 # Why: public HTTP on ttl64 ends TLS at Cloudflare and reaches Apache as plain HTTP; WordPress
-# must still build https:// links, on whatever hostname the load balancer gives it.
-ENV WORDPRESS_CONFIG_EXTRA="if (($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https') { $_SERVER['HTTPS'] = 'on'; } \
-if (!empty($_SERVER['HTTP_HOST'])) { define('WP_HOME', (empty($_SERVER['HTTPS']) ? 'http' : 'https') . '://' . $_SERVER['HTTP_HOST']); define('WP_SITEURL', WP_HOME); }"
+# must still build https:// links, on whatever hostname the load balancer gives it. The PHP lives
+# in a file because Docker would expand its $_SERVER in an ENV value.
+COPY ttl64-proxy.php /usr/local/etc/ttl64-proxy.php
+ENV WORDPRESS_CONFIG_EXTRA="require '/usr/local/etc/ttl64-proxy.php';"
 
 ENTRYPOINT ["ttl64-entrypoint.sh"]
 CMD ["apache2-foreground"]
