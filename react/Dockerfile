@@ -6,7 +6,7 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
-FROM ghcr.io/ttl64computer/nginx:1.31@sha256:84cf932f4fb208a58f20f8f6652495dc96028eed64121d3ea0991b633bf2ad75
+FROM ghcr.io/ttl64computer/nginx:1.31@sha256:beee0724e5fd0358d83574aa09d6e8b8a5faa72f72e2737c5171922ea245675d
 
 LABEL org.opencontainers.image.source="https://github.com/ttl64computer/service-images" \
       org.opencontainers.image.description="React (Vite) starter for ttl64 clusters, served by the ttl64 nginx" \
