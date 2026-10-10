@@ -11,7 +11,10 @@ RUN apk upgrade --no-cache && adduser -D -H app
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PORT=8000
 WORKDIR /srv
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# Why: the base ships old pip/setuptools wheels for ensurepip that scanners flag; nothing here needs them.
+RUN pip install --no-cache-dir --upgrade pip setuptools \
+ && rm -rf /usr/local/lib/python3.13/ensurepip \
+ && pip install --no-cache-dir -r requirements.txt
 COPY --chown=app:app . .
 USER app
 
