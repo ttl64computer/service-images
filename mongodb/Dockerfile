@@ -19,9 +19,9 @@ RUN apt-get update \
  && rm -rf /var/lib/apt/lists/*
 
 # Why: the official entrypoint reads the config with js-yaml from /opt/js-yaml; upstream pins
-# 3.13.1, which has a known DoS. 3.15.0 has the fix and the same API and layout.
-ADD --checksum=sha256:b3aab629b85784c5070c4dd6442d7ca4dc98ba644e2132a2f96f0d4f09364aa6 \
-    https://registry.npmjs.org/js-yaml/-/js-yaml-3.15.0.tgz /tmp/js-yaml.tgz
+# 3.13.1, which has known DoS bugs. 3.15.2 has the fixes and the same API and layout.
+ADD --checksum=sha256:7f005cf0b8ee639b4557e0e321dc067c1f2aa0a442d096e03f2ab53353738794 \
+    https://registry.npmjs.org/js-yaml/-/js-yaml-3.15.2.tgz /tmp/js-yaml.tgz
 RUN rm -rf /opt/js-yaml \
  && mkdir -p /opt/js-yaml \
  && tar -xzf /tmp/js-yaml.tgz -C /opt/js-yaml --strip-components=1 \
