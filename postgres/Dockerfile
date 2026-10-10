@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM postgres:17.11-alpine@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24
+FROM postgres:18.6-alpine@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873
 
 LABEL org.opencontainers.image.source="https://github.com/ttl64computer/service-images" \
       org.opencontainers.image.description="Postgres for ttl64 clusters: TLS on by default with a self-signed certificate" \
