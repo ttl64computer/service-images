@@ -1,0 +1,31 @@
+name: mongodb
+
+on:
+  # Why: push, not pull_request; a PR's path filter sees the whole PR diff, so every push
+  # rebuilt every image. A push only sees its own commits.
+  push:
+    branches: [main, "feature/**"]
+    paths:
+      - mongodb/**
+      - .github/workflows/mongodb.yml
+      - .github/workflows/build-image.yml
+  schedule:
+    # Weekly rebuild for OS patches.
+    - cron: "17 4 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mongodb-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    permissions:
+      contents: read
+      packages: write
+    uses: ./.github/workflows/build-image.yml
+    with:
+      image: mongodb

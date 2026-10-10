@@ -1,13 +1,10 @@
 name: nginx
 
 on:
+  # Why: push, not pull_request; a PR's path filter sees the whole PR diff, so every push
+  # rebuilt every image. A push only sees its own commits.
   push:
-    branches: [main]
-    paths:
-      - nginx/**
-      - .github/workflows/nginx.yml
-      - .github/workflows/build-image.yml
-  pull_request:
+    branches: [main, "feature/**"]
     paths:
       - nginx/**
       - .github/workflows/nginx.yml
