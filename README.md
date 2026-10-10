@@ -9,6 +9,9 @@ are public on GitHub Container Registry:
 | Image | Upstream | Pull |
 |---|---|---|
 | [nginx](nginx/) | `nginx:*-alpine` | `ghcr.io/ttl64computer/nginx` |
+| [postgres](postgres/) | `postgres:*-alpine` | `ghcr.io/ttl64computer/postgres` |
+| [mysql](mysql/) | `mysql:8.4` | `ghcr.io/ttl64computer/mysql` |
+| [redis](redis/) | `redis:*-alpine` | `ghcr.io/ttl64computer/redis` |
 
 ## How images are built
 
