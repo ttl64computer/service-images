@@ -6,7 +6,11 @@ LABEL org.opencontainers.image.source="https://github.com/ttl64computer/service-
       org.opencontainers.image.licenses="PostgreSQL"
 
 # Why: the weekly rebuild picks up Alpine security fixes without waiting for a new upstream tag.
-RUN apk upgrade --no-cache && apk add --no-cache openssl
+# gosu is a Go binary pinned to an old toolchain (scanners flag its stdlib); su-exec does the
+# same job, is built by Alpine, and takes the same arguments the entrypoint passes.
+RUN apk upgrade --no-cache \
+ && apk add --no-cache openssl su-exec \
+ && ln -sf /sbin/su-exec /usr/local/bin/gosu
 
 COPY ttl64-ssl.sh /usr/local/bin/ttl64-ssl.sh
 COPY ttl64-entrypoint.sh /usr/local/bin/ttl64-entrypoint.sh
