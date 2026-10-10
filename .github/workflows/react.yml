@@ -1,13 +1,10 @@
 name: react
 
 on:
+  # Why: push, not pull_request; a PR's path filter sees the whole PR diff, so every push
+  # rebuilt every image. A push only sees its own commits.
   push:
-    branches: [main]
-    paths:
-      - react/**
-      - .github/workflows/react.yml
-      - .github/workflows/build-image.yml
-  pull_request:
+    branches: [main, "feature/**"]
     paths:
       - react/**
       - .github/workflows/react.yml
