@@ -32,6 +32,24 @@ RUN curl -fsSL https://astral.sh/uv/install.sh | env UV_INSTALL_DIR=/usr/local/b
 # code-server: the browser IDE, published to the volume-backed workspace.
 RUN curl -fsSL https://code-server.dev/install.sh | sh
 
+# Why: code-server and the bundled npm vendor JS libs with fixable CVEs
+# (shell-quote RCE, basic-ftp DoS, sigstore cert check) that the repo's Trivy
+# gate blocks the build on. Pin each vendored copy, wherever it is nested, to
+# its fixed version; the APIs are compatible and the strict CVE gate stays on.
+RUN set -eux; \
+    npm install -g npm@latest; \
+    npm cache clean --force; \
+    for spec in shell-quote@1.11.0 basic-ftp@6.2.1 sigstore@4.1.1; do \
+      name="${spec%@*}"; \
+      tmp="$(mktemp -d)"; \
+      ( cd "$tmp" && npm pack "$spec" >/dev/null && tar -xzf ./*.tgz ); \
+      find /usr/lib -type d -path "*/node_modules/$name" | while IFS= read -r dir; do \
+        rm -rf "${dir:?}"/* "${dir:?}"/.[!.]* 2>/dev/null || true; \
+        cp -a "$tmp/package/." "$dir/"; \
+      done; \
+      rm -rf "$tmp"; \
+    done
+
 # Why: a non-root user owns the workspace; the volume is chowned to it at start.
 RUN useradd --create-home --shell /bin/bash --uid 1000 dev \
  && mkdir -p "$WORKSPACE" \
