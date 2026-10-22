@@ -39,7 +39,7 @@ RUN curl -fsSL https://code-server.dev/install.sh | sh
 RUN set -eux; \
     npm install -g npm@latest; \
     npm cache clean --force; \
-    for spec in shell-quote@1.11.0 basic-ftp@6.2.1 sigstore@4.1.1; do \
+    for spec in shell-quote@1.11.0 basic-ftp@6.2.1 sigstore@4.1.1 follow-redirects@1.16.1; do \
       name="${spec%@*}"; \
       tmp="$(mktemp -d)"; \
       ( cd "$tmp" && npm pack "$spec" >/dev/null && tar -xzf ./*.tgz ); \
