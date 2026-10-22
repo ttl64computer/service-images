@@ -10,8 +10,11 @@ if [ -d "$WORKSPACE" ]; then
     chown dev:dev "$WORKSPACE" 2>/dev/null || true
 fi
 
-# Drop to the dev user for the server itself.
+# Drop to the dev user for the server itself. setpriv keeps the environment, so
+# HOME would stay /root (uid 0's) and code-server could not write its config;
+# set it to the dev user's home explicitly.
 if [ "$(id -u)" = "0" ] && command -v setpriv >/dev/null 2>&1; then
-    exec setpriv --reuid=1000 --regid=1000 --init-groups "$@"
+    exec setpriv --reuid=1000 --regid=1000 --init-groups \
+        env HOME=/home/dev "$@"
 fi
 exec "$@"
