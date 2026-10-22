@@ -9,7 +9,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
     NODE_MAJOR=22 \
     WORKSPACE=/workspace \
     PNPM_HOME=/usr/local/share/pnpm \
-    PATH=/usr/local/share/pnpm:/usr/local/bin:/usr/bin:/bin
+    PATH=/usr/local/share/pnpm:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 
 # Why: the weekly rebuild picks up Debian security fixes without a new base tag.
 RUN apt-get update \
