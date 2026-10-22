@@ -12,6 +12,7 @@ are public on GitHub Container Registry:
 | [postgres](postgres/) | `postgres:*-alpine` | `ghcr.io/ttl64computer/postgres` |
 | [mysql](mysql/) | `mysql:8.4` | `ghcr.io/ttl64computer/mysql` |
 | [redis](redis/) | `redis:*-alpine` | `ghcr.io/ttl64computer/redis` |
+| [devbox](devbox/) | `debian:bookworm-slim` | `ghcr.io/ttl64computer/devbox` |
 
 ## How images are built
 
