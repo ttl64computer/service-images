@@ -4,7 +4,7 @@ FROM golang:1.27.2-alpine@sha256:f92b6ef800e499660581efdabdf25d9d817a9d124eaf900
 ARG GOSU_VERSION=1.19
 RUN CGO_ENABLED=0 GOBIN=/out go install -trimpath -ldflags=-s github.com/tianon/gosu@${GOSU_VERSION}
 
-FROM mongo:8.3.11@sha256:d731d77bfd7afd66bd487bdf627b5bf7ce4c3602ec461d635977021db529ebbc
+FROM mongo:8.3.13@sha256:0e900a3364da37b76d642b73b0bba56bd4c6c509ab470cf700436fd866bee3ff
 
 LABEL org.opencontainers.image.source="https://github.com/ttl64computer/service-images" \
       org.opencontainers.image.description="MongoDB for ttl64 clusters: auth on, sized for small nodes" \
