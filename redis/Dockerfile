@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM redis:8.10.2-alpine@sha256:3811787313eba226a2ef38658c6ccb91cd5e110edc89c37767de373120a0e5a0
+FROM redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
 
 LABEL org.opencontainers.image.source="https://github.com/ttl64computer/service-images" \
       org.opencontainers.image.description="Redis for ttl64 clusters: password required, sized for small nodes" \
