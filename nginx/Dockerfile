@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM nginx:1.31.0-alpine@sha256:2f07d83bf561b506400dc183b1b2003803e39efbd22451f848adaba14d28c7c7
+FROM nginx:1.31.8-alpine@sha256:fed7e14be83cbd2661a75cdc5b872d936cf155d46c327084d30b8df19ae88d72
 
 LABEL org.opencontainers.image.source="https://github.com/ttl64computer/service-images" \
       org.opencontainers.image.description="Nginx for ttl64 clusters: hardened defaults, /healthz and a welcome page" \
